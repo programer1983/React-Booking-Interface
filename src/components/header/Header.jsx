@@ -7,7 +7,7 @@ import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css';
 import { format } from 'date-fns' // theme css file
 
-const Header = () => {
+const Header = ({type}) => {
   const [openDate, setOpenDate] = React.useState(false)
   const [openOptions, setOpenOptions] = React.useState(false)
   const [options, setOptions] = React.useState({
@@ -35,7 +35,7 @@ const Header = () => {
   
   return (
     <div className='header'>
-      <div className='headerContainer'>
+      <div className={type === "list" ? "headerContainer listMode" : "headerContainer"}>
         <div className='headerList'>
           <div className='headerListItem active'>
             <FontAwesomeIcon icon={faBed} />
@@ -47,17 +47,19 @@ const Header = () => {
           </div>
           <div className='headerListItem'>
             <FontAwesomeIcon icon={faCar} />
-            <span>Statys</span>
+            <span>Car rentals</span>
           </div>
           <div className='headerListItem'>
             <FontAwesomeIcon icon={faBed} />
-            <span>Statys</span>
+            <span>Atractions</span>
           </div>
           <div className='headerListItem'>
             <FontAwesomeIcon icon={faTaxi} />
-            <span>Statys</span>
+            <span>Airport taxis</span>
           </div>
         </div>
+       {type !== "list" &&
+        <>
         <h1 className='headerTitle'>A lifetime of discounts? It's Genius.</h1>
         <p className='headerDisc'>
           Get rewarded for your travels – unlock instant savings of 10% or
@@ -139,6 +141,8 @@ const Header = () => {
             <button className='headerBtn'>Search</button> 
           </div>
         </div>
+        </>
+        }
       </div>
     </div>
   )
