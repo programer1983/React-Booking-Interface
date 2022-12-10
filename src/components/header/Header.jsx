@@ -6,10 +6,13 @@ import { DateRange } from 'react-date-range'
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css';
 import { format } from 'date-fns' // theme css file
+import { useNavigate } from 'react-router-dom'
 
 const Header = ({type}) => {
   const [openDate, setOpenDate] = React.useState(false)
+  const [destination, setDestination] = React.useState('')
   const [openOptions, setOpenOptions] = React.useState(false)
+  const navigate = useNavigate()
   const [options, setOptions] = React.useState({
     abult: 1,
     children: 0,
@@ -32,6 +35,11 @@ const Header = ({type}) => {
       }
     })
   }
+  
+  const handleSearch = () => {
+    navigate("/hotels", {state: {destination, date, options}})
+  }
+  
   
   return (
     <div className='header'>
@@ -73,6 +81,7 @@ const Header = ({type}) => {
               type="text" 
               placeholder="Where are you going?"
               className='headerSearchInput'
+              onChange={e => setDestination(e.target.value)}
             />
           </div>
           <div className='headerSearchItem'>
@@ -87,6 +96,7 @@ const Header = ({type}) => {
                   moveRangeOnFirstSelection={false}
                   ranges={date}
                   className="date"
+                  minDate={new Date()}
                 />}
           </div>
           <div className='headerSearchItem'>
@@ -105,7 +115,11 @@ const Header = ({type}) => {
                       -
                   </button>
                   <span className='optionCounterNumber'>{options.abult}</span>
-                  <button className='optionCounterButton' onClick={() => handleOption("abult", "i")}>+</button>
+                  <button 
+                    className='optionCounterButton' 
+                    onClick={() => handleOption("abult", "i")}>
+                      +
+                  </button>
                 </div>
               </div>
               <div className='optionItem'>
@@ -118,7 +132,11 @@ const Header = ({type}) => {
                       -
                   </button>
                   <span className='optionCounterNumber'>{options.children}</span>
-                  <button className='optionCounterButton' onClick={() => handleOption("children", "i")}>+</button>
+                  <button 
+                     className='optionCounterButton' 
+                     onClick={() => handleOption("children", "i")}>
+                      +
+                  </button>
                 </div>
               </div>
               <div className='optionItem'>
@@ -131,14 +149,22 @@ const Header = ({type}) => {
                       -
                   </button>
                   <span className='optionCounterNumber'>{options.room}</span>
-                  <button className='optionCounterButton' onClick={() => handleOption("room", "i")}>+</button>
+                  <button 
+                    className='optionCounterButton' 
+                    onClick={() => handleOption("room", "i")}>
+                    +
+                  </button>
                 </div>
               </div>
             </div>
             }
           </div>
           <div className='headerSearchItem'>
-            <button className='headerBtn'>Search</button> 
+            <button 
+              onClick={handleSearch} 
+              className='headerBtn'>
+                Search
+            </button> 
           </div>
         </div>
         </>
